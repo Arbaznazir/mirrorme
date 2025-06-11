@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MirrorMe</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="../icons/icon-128.svg" alt="MirrorMe Logo" class="mirror-icon-img" />
+        <h1>MirrorMe</h1>
+      </div>
+      <div class="status-indicator" id="statusIndicator">
+        <span class="status-dot"></span>
+        <span class="status-text">Local Only</span>
+      </div>
+    </header>
+
+    <!-- Login Section -->
+    <div class="section" id="loginSection">
+      <h2>Connect Your Digital Mirror</h2>
+      <p class="description">Sign in to sync your persona across devices</p>
+      
+      <form id="loginForm" class="form">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+      
+      <div class="divider">
+        <span>or</span>
+      </div>
+      
+      <button id="registerBtn" class="btn btn-secondary">Create Account</button>
+      <button id="skipBtn" class="btn btn-text">Continue Locally</button>
+    </div>
+
+    <!-- Register Section -->
+    <div class="section hidden" id="registerSection">
+      <h2>Create Your Account</h2>
+      <p class="description">Join MirrorMe to sync your digital persona</p>
+      
+      <form id="registerForm" class="form">
+        <div class="input-group">
+          <input type="text" id="fullName" placeholder="Full Name">
+        </div>
+        <div class="input-group">
+          <input type="email" id="regEmail" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="regPassword" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+      
+      <button id="backToLoginBtn" class="btn btn-text">Back to Sign In</button>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="section hidden" id="dashboardSection">
+      <!-- Quick Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="dataPointsCount">0</div>
+          <div class="stat-label">Data Points</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="topicsCount">0</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="traitsCount">0</div>
+          <div class="stat-label">Traits</div>
+        </div>
+      </div>
+
+      <!-- Persona Summary -->
+      <div class="persona-card">
+        <h3>Your Digital Persona</h3>
+        <p id="personaSummary" class="persona-text">
+          Start browsing to build your digital persona...
+        </p>
+        
+        <div class="persona-traits" id="personaTraits">
+          <!-- Traits will be populated here -->
+        </div>
+      </div>
+
+      <!-- Top Topics -->
+      <div class="topics-section">
+        <h3>Your Interests</h3>
+        <div class="topics-list" id="topicsList">
+          <!-- Topics will be populated here -->
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button id="analyzeBtn" class="btn btn-primary">
+          <span class="btn-icon">🧠</span>
+          Analyze Persona
+        </button>
+        <button id="exportBtn" class="btn btn-secondary">
+          <span class="btn-icon">📤</span>
+          Export Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="section hidden" id="settingsSection">
+      <h2>Privacy Settings</h2>
+      
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>Data Collection</h4>
+          <p>Track browsing behavior and searches</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="trackingToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>Cloud Sync</h4>
+          <p>Sync data across devices (requires login)</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="syncToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h4>Sensitive Data</h4>
+          <p>Include sensitive browsing in analysis</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="sensitiveToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="danger-zone">
+        <h4>Data Management</h4>
+        <button id="clearDataBtn" class="btn btn-danger">Clear All Local Data</button>
+        <button id="deleteAccountBtn" class="btn btn-danger hidden">Delete Account</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <button class="nav-btn active" data-section="dashboard">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-btn" data-section="settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </button>
+      <button class="nav-btn" id="logoutBtn">
+        <span class="nav-icon">🚪</span>
+        <span class="nav-label">Logout</span>
+      </button>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <p>Analyzing your digital persona...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast hidden" id="toast">
+      <span class="toast-message"></span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html> 
