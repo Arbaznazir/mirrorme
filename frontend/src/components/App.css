@@ -1,0 +1,12 @@
+/* App component specific styles */
+
+.app-nav-logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.app-hero-logo {
+  width: 5rem;
+  height: 5rem;
+  margin: 0 auto 2rem;
+} 
